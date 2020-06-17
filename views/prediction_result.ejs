@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <link rel="stylesheet" href="/css/styles.css">
+  <title>Win Rate Prediction</title>
+</head>
+
+<body>
+  <div class="container">
+    <div class="title">
+      <h1>League of Legends with Deep Learning</h1>
+    </div>
+    <div class="section">
+      <h2>Win Rate Prediction for High Elo Ranked Games</h2>
+      <div class="main-block">
+        <table>
+          <tr>
+            <th class="column">First Blood</th>
+            <th class="column">First Tower</th>
+          </tr>
+          <tr>
+            <% if (data[0] == 0) { %>
+              <th class="data">No</th>
+            <% } else { %>
+              <th class="data">Yes</th>
+            <% } %>
+            <% if (data[1] == 0) { %>
+              <th class="data">No</th>
+            <% } else { %>
+              <th class="data">Yes</th>
+            <% } %>
+          </tr>
+          <tr>
+            <th class="column">First Baron</th>
+            <th class="column">First Dragon</th>
+          </tr>
+          <tr>
+            <% if (data[2] == 0) { %>
+              <th class="data">No</th>
+            <% } else { %>
+              <th class="data">Yes</th>
+            <% } %>
+            <% if (data[3] == 0) { %>
+              <th class="data">No</th>
+            <% } else { %>
+              <th class="data">Yes</th>
+            <% } %>
+          </tr>
+          <tr>
+            <th class="column">Number of Dragon Kills</th>
+            <th class="column">Number of Baron Kills</th>
+          </tr>
+          <tr>
+            <th class="data"><%= data[4] %></th>
+            <th class="data"><%= data[5] %></th>
+          </tr>
+          <tr>
+            <th class="column">Number of Ward Placed</th>
+            <th class="column">Number of Ward Kills</th>
+          </tr>
+          <tr>
+            <th class="data"><%= data[6] %></th>
+            <th class="data"><%= data[7] %></th>
+          </tr>
+          <tr>
+            <th class="column">Number of Kills</th>
+            <th class="column">Number of Deaths</th>
+          </tr>
+          <tr>
+            <th class="data"><%= data[8] %></th>
+            <th class="data"><%= data[9] %></th>
+          </tr>
+          <tr>
+            <th class="column">Number of Assists</th>
+            <th class="column">Quantity of Champion Damage Dealt</th>
+          </tr>
+          <tr>
+            <th class="data"><%= data[10] %></th>
+            <th class="data"><%= data[11] %></th>
+          </tr>
+          <tr>
+            <th class="column">Quantity of Total Gold</th>
+            <th class="column">Number of Total Minion Kills</th>
+          </tr>
+          <tr>
+            <th class="data"><%= data[12] %></th>
+            <th class="data"><%= data[13] %></th>
+          </tr>
+          <tr>
+            <th class="column">Total Level of Your Team (5 Members)</th>
+            <th class="column">Number of Jungle Minion Kills</th>
+          </tr>
+          <tr>
+            <th class="data"><%= data[14] %></th>
+            <th class="data"><%= data[16] %></th>
+          </tr>
+          <tr>
+            <th class="column">Number of Killing Sprees</th>
+            <th class="column">Number of Total Heal</th>
+          </tr>
+          <tr>
+            <th class="data"><%= data[17] %></th>
+            <th class="data"><%= data[18] %></th>
+          </tr>
+        </table>
+        <div class="result">
+          <p class="res">Win rate: <%= prediction %>%</p>
+          <% if(prediction >= 80) { %>
+            <p class="res">You have high probability to win your next game! Good Luck!</p>
+          <% } else if (prediction < 80 && prediction >= 50) { %>
+            <p class="res">You may win your next game. Be careful!</p>
+          <% } else { %>
+            <p class="res">You will probably loose the game!</p>
+          <% } %>
+        </div>
+        <form action="/predict" method="get">
+          <button class="button" type="submit" name="predict">Predict Again</button>
+        </form>
+      </div>
+    </div>
+  </div>
+  <footer>
+    <p id="copyright"></p>
+  </footer>
+  <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+  <script type="text/javascript">
+    var today = new Date();
+    $("#copyright").text("© " + today.getFullYear() + " UCI MCS Class of 2020.");
+  </script>
+</body>
+
+</html>

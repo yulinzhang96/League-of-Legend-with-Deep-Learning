@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <link rel="stylesheet" href="/css/styles.css">
+  <title>Game Victory Prediction Demo</title>
+</head>
+
+<body>
+  <div class="container">
+    <div class="title">
+      <h1>League of Legends with Deep Learning</h1>
+    </div>
+    <div class="section">
+      <h2>Game Victory Prediction Demo <%= id %></h2>
+      <h3>Please Select a Demo:</h3>
+      <form class="option-form" action="/demo" method="post">
+        <select name="id" required>
+          <option value="1" <%= (id == 1 ? "selected": "") %> >Demo 1</option>
+          <option value="2" <%= (id == 2 ? "selected": "") %> >Demo 2</option>
+          <option value="3" <%= (id == 3 ? "selected": "") %> >Demo 3</option>
+          <option value="4" <%= (id == 4 ? "selected": "") %> >Demo 4</option>
+          <option value="5" <%= (id == 5 ? "selected": "") %> >Demo 5</option>
+        </select>
+        <button class="option-button" type="submit" name="button">Switch</button>
+      </form>
+      <div class="main-block">
+        <% if (id == 1) { %>
+        <h3 class="team">Blue Team</h3>
+        <table>
+          <tr>
+            <th class="column">Champion 1</th>
+            <th class="column">Champion 2</th>
+            <th class="column">Champion 3</th>
+            <th class="column">Champion 4</th>
+            <th class="column">Champion 5</th>
+          </tr>
+          <tr>
+            <th class="data">Vladimir</th>
+            <th class="data">Bard</th>
+            <th class="data">Kog Maw</th>
+            <th class="data">Master Yi</th>
+            <th class="data">Viktor</th>
+          </tr>
+          <tr>
+            <th class="column">Ban 1</th>
+            <th class="column">Ban 2</th>
+            <th class="column">Ban 3</th>
+            <th class="column">Ban 4</th>
+            <th class="column">Ban 5</th>
+          </tr>
+          <tr>
+            <th class="data">Graves</th>
+            <th class="data">Xayah</th>
+            <th class="data">Darius</th>
+            <th class="data">Zed</th>
+            <th class="data">Thresh</th>
+          </tr>
+        </table>
+        <h3 class="team">Red Team</h3>
+        <table>
+          <tr>
+            <th class="column">Champion 1</th>
+            <th class="column">Champion 2</th>
+            <th class="column">Champion 3</th>
+            <th class="column">Champion 4</th>
+            <th class="column">Champion 5</th>
+          </tr>
+          <tr>
+            <th class="data">Riven</th>
+            <th class="data">Janna</th>
+            <th class="data">Cassiopeia</th>
+            <th class="data">Draven</th>
+            <th class="data">Kayn</th>
+          </tr>
+          <tr>
+            <th class="column">Ban 1</th>
+            <th class="column">Ban 2</th>
+            <th class="column">Ban 3</th>
+            <th class="column">Ban 4</th>
+            <th class="column">Ban 5</th>
+          </tr>
+          <tr>
+            <th class="data">Fiora</th>
+            <th class="data">Vayne</th>
+            <th class="data">Karma</th>
+            <th class="data">Soraka</th>
+            <th class="data">Caitlyn</th>
+          </tr>
+        </table>
+        <h3 class="team">Other Information</h3>
+        <table>
+          <tr>
+            <th class="column">First Blood</th>
+            <th class="column">First Tower</th>
+            <th class="column">First Inhibitor</th>
+          </tr>
+          <tr>
+            <th class="data">Blue Team</th>
+            <th class="data">Blue Team</th>
+            <th class="data">Red Team</th>
+          </tr>
+          <tr>
+            <th class="column">First Baron</th>
+            <th class="column">First Dragon</th>
+            <th class="column">First Rift Herald</th>
+          </tr>
+          <tr>
+            <th class="data">Blue Team</th>
+            <th class="data">Red Team</th>
+            <th class="data">Blue Team</th>
+          </tr>
+        </table>
+        <h3 class="duration">Game Duration: 31.43 minutes</h3>
+        <p id="res" class="res"></p>
+        <form id="form" action="/team_predict" method="post">
+          <input type="hidden" name="inputOption" value=1>
+          <label for="predict">Press the submit button to predict which team will win.</label>
+          <button class="button" type="submit" name="predict">Submit</button>
+        </form>
+        <% } else if (id == 2) { %>
+        <h3 class="team">Blue Team</h3>
+        <table>
+          <tr>
+            <th class="column">Champion 1</th>
+            <th class="column">Champion 2</th>
+            <th class="column">Champion 3</th>
+            <th class="column">Champion 4</th>
+            <th class="column">Champion 5</th>
+          </tr>
+          <tr>
+            <th class="data">Draven</th>
+            <th class="data">Irelia</th>
+            <th class="data">Nidalee</th>
+            <th class="data">Kayle</th>
+            <th class="data">Shaco</th>
+          </tr>
+          <tr>
+            <th class="column">Ban 1</th>
+            <th class="column">Ban 2</th>
+            <th class="column">Ban 3</th>
+            <th class="column">Ban 4</th>
+            <th class="column">Ban 5</th>
+          </tr>
+          <tr>
+            <th class="data">Malphite</th>
+            <th class="data">Morgana</th>
+            <th class="data">Hecarim</th>
+            <th class="data">Yasuo</th>
+            <th class="data">Riven</th>
+          </tr>
+        </table>
+        <h3 class="team">Red Team</h3>
+        <table>
+          <tr>
+            <th class="column">Champion 1</th>
+            <th class="column">Champion 2</th>
+            <th class="column">Champion 3</th>
+            <th class="column">Champion 4</th>
+            <th class="column">Champion 5</th>
+          </tr>
+          <tr>
+            <th class="data">Caitlyn</th>
+            <th class="data">Darius</th>
+            <th class="data">Teemo</th>
+            <th class="data">Xayah</th>
+            <th class="data">Warwick</th>
+          </tr>
+          <tr>
+            <th class="column">Ban 1</th>
+            <th class="column">Ban 2</th>
+            <th class="column">Ban 3</th>
+            <th class="column">Ban 4</th>
+            <th class="column">Ban 5</th>
+          </tr>
+          <tr>
+            <th class="data">Master Yi</th>
+            <th class="data">Vayne</th>
+            <th class="data">Zed</th>
+            <th class="data">Caitlyn</th>
+            <th class="data">Illaoi</th>
+          </tr>
+        </table>
+        <h3 class="team">Other Information</h3>
+        <table>
+          <tr>
+            <th class="column">First Blood</th>
+            <th class="column">First Tower</th>
+            <th class="column">First Inhibitor</th>
+          </tr>
+          <tr>
+            <th class="data">Blue Team</th>
+            <th class="data">Blue Team</th>
+            <th class="data">Blue Team</th>
+          </tr>
+          <tr>
+            <th class="column">First Baron</th>
+            <th class="column">First Dragon</th>
+            <th class="column">First Rift Herald</th>
+          </tr>
+          <tr>
+            <th class="data">Blue Team</th>
+            <th class="data">Blue Team</th>
+            <th class="data">Blue Team</th>
+          </tr>
+        </table>
+        <h3 class="duration">Game Duration: 32.2 minutes</h3>
+        <p id="res" class="res"></p>
+        <form id="form" action="/team_predict" method="post">
+          <input type="hidden" name="inputOption" value=2>
+          <label for="predict">Press the submit button to predict which team will win.</label>
+          <button class="button" type="submit" name="predict">Submit</button>
+        </form>
+        <% } else if (id == 3) { %>
+        <h3 class="team">Blue Team</h3>
+        <table>
+          <tr>
+            <th class="column">Champion 1</th>
+            <th class="column">Champion 2</th>
+            <th class="column">Champion 3</th>
+            <th class="column">Champion 4</th>
+            <th class="column">Champion 5</th>
+          </tr>
+          <tr>
+            <th class="data">Tristana</th>
+            <th class="data">Kayn</th>
+            <th class="data">Nami</th>
+            <th class="data">Rumble</th>
+            <th class="data">Kassadin</th>
+          </tr>
+          <tr>
+            <th class="column">Ban 1</th>
+            <th class="column">Ban 2</th>
+            <th class="column">Ban 3</th>
+            <th class="column">Ban 4</th>
+            <th class="column">Ban 5</th>
+          </tr>
+          <tr>
+            <th class="data">Cassiopeia</th>
+            <th class="data">Thresh</th>
+            <th class="data">Jayce</th>
+            <th class="data">Jax</th>
+            <th class="data">Ashe</th>
+          </tr>
+        </table>
+        <h3 class="team">Red Team</h3>
+        <table>
+          <tr>
+            <th class="column">Champion 1</th>
+            <th class="column">Champion 2</th>
+            <th class="column">Champion 3</th>
+            <th class="column">Champion 4</th>
+            <th class="column">Champion 5</th>
+          </tr>
+          <tr>
+            <th class="data">Lulu</th>
+            <th class="data">Janna</th>
+            <th class="data">Twitch</th>
+            <th class="data">Soraka</th>
+            <th class="data">Blitzcrank</th>
+          </tr>
+          <tr>
+            <th class="column">Ban 1</th>
+            <th class="column">Ban 2</th>
+            <th class="column">Ban 3</th>
+            <th class="column">Ban 4</th>
+            <th class="column">Ban 5</th>
+          </tr>
+          <tr>
+            <th class="data">Yasuo</th>
+            <th class="data">Zed</th>
+            <th class="data">Kha'Zix</th>
+            <th class="data">Maokai</th>
+            <th class="data">Evelynn</th>
+          </tr>
+        </table>
+        <h3 class="team">Other Information</h3>
+        <table>
+          <tr>
+            <th class="column">First Blood</th>
+            <th class="column">First Tower</th>
+            <th class="column">First Inhibitor</th>
+          </tr>
+          <tr>
+            <th class="data">Blue Team</th>
+            <th class="data">Red Team</th>
+            <th class="data">Red Team</th>
+          </tr>
+          <tr>
+            <th class="column">First Baron</th>
+            <th class="column">First Dragon</th>
+            <th class="column">First Rift Herald</th>
+          </tr>
+          <tr>
+            <th class="data">Red Team</th>
+            <th class="data">Red Team</th>
+            <th class="data">Red Team</th>
+          </tr>
+        </table>
+        <h3 class="duration">Game Duration: 29.23 minutes</h3>
+        <p id="res" class="res"></p>
+        <form id="form" action="/team_predict" method="post">
+          <input type="hidden" name="inputOption" value=3>
+          <label for="predict">Press the submit button to predict which team will win.</label>
+          <button class="button" type="submit" name="predict">Submit</button>
+        </form>
+        <% } else if (id == 4) { %>
+        <h3 class="team">Blue Team</h3>
+        <table>
+          <tr>
+            <th class="column">Champion 1</th>
+            <th class="column">Champion 2</th>
+            <th class="column">Champion 3</th>
+            <th class="column">Champion 4</th>
+            <th class="column">Champion 5</th>
+          </tr>
+          <tr>
+            <th class="data">Maokai</th>
+            <th class="data">Brand</th>
+            <th class="data">Twitch</th>
+            <th class="data">Orianna</th>
+            <th class="data">Dr. Mundo</th>
+          </tr>
+          <tr>
+            <th class="column">Ban 1</th>
+            <th class="column">Ban 2</th>
+            <th class="column">Ban 3</th>
+            <th class="column">Ban 4</th>
+            <th class="column">Ban 5</th>
+          </tr>
+          <tr>
+            <th class="data">Malzahar</th>
+            <th class="data">Warwick</th>
+            <th class="data">Thresh</th>
+            <th class="data">Riven</th>
+            <th class="data">Ashe</th>
+          </tr>
+        </table>
+        <h3 class="team">Red Team</h3>
+        <table>
+          <tr>
+            <th class="column">Champion 1</th>
+            <th class="column">Champion 2</th>
+            <th class="column">Champion 3</th>
+            <th class="column">Champion 4</th>
+            <th class="column">Champion 5</th>
+          </tr>
+          <tr>
+            <th class="data">Zed</th>
+            <th class="data">Vayne</th>
+            <th class="data">Ornn</th>
+            <th class="data">Fiora</th>
+            <th class="data">Cho'Gath</th>
+          </tr>
+          <tr>
+            <th class="column">Ban 1</th>
+            <th class="column">Ban 2</th>
+            <th class="column">Ban 3</th>
+            <th class="column">Ban 4</th>
+            <th class="column">Ban 5</th>
+          </tr>
+          <tr>
+            <th class="data">Camille</th>
+            <th class="data">Tristana</th>
+            <th class="data">Kayn</th>
+            <th class="data">Janna</th>
+            <th class="data">Caitlyn</th>
+          </tr>
+        </table>
+        <h3 class="team">Other Information</h3>
+        <table>
+          <tr>
+            <th class="column">First Blood</th>
+            <th class="column">First Tower</th>
+            <th class="column">First Inhibitor</th>
+          </tr>
+          <tr>
+            <th class="data">Blue Team</th>
+            <th class="data">Blue Team</th>
+            <th class="data">Blue Team</th>
+          </tr>
+          <tr>
+            <th class="column">First Baron</th>
+            <th class="column">First Dragon</th>
+            <th class="column">First Rift Herald</th>
+          </tr>
+          <tr>
+            <th class="data">Blue Team</th>
+            <th class="data">Blue Team</th>
+            <th class="data">Blue Team</th>
+          </tr>
+        </table>
+        <h3 class="duration">Game Duration: 41.85 minutes</h3>
+        <p id="res" class="res"></p>
+        <form id="form" action="/team_predict" method="post">
+          <input type="hidden" name="inputOption" value=4>
+          <label for="predict">Press the submit button to predict which team will win.</label>
+          <button class="button" type="submit" name="predict">Submit</button>
+        </form>
+        <% } else { %>
+        <h3 class="team">Blue Team</h3>
+        <table>
+          <tr>
+            <th class="column">Champion 1</th>
+            <th class="column">Champion 2</th>
+            <th class="column">Champion 3</th>
+            <th class="column">Champion 4</th>
+            <th class="column">Champion 5</th>
+          </tr>
+          <tr>
+            <th class="data">Warwick</th>
+            <th class="data">Twitch</th>
+            <th class="data">Janna</th>
+            <th class="data">Draven</th>
+            <th class="data">Syndra</th>
+          </tr>
+          <tr>
+            <th class="column">Ban 1</th>
+            <th class="column">Ban 2</th>
+            <th class="column">Ban 3</th>
+            <th class="column">Ban 4</th>
+            <th class="column">Ban 5</th>
+          </tr>
+          <tr>
+            <th class="data">Sona</th>
+            <th class="data">Jarvan IV</th>
+            <th class="data">Kayn</th>
+            <th class="data">Kassadin</th>
+            <th class="data">Caitlyn</th>
+          </tr>
+        </table>
+        <h3 class="team">Red Team</h3>
+        <table>
+          <tr>
+            <th class="column">Champion 1</th>
+            <th class="column">Champion 2</th>
+            <th class="column">Champion 3</th>
+            <th class="column">Champion 4</th>
+            <th class="column">Champion 5</th>
+          </tr>
+          <tr>
+            <th class="data">Malzahar</th>
+            <th class="data">Lee Sin</th>
+            <th class="data">Thresh</th>
+            <th class="data">Morgana</th>
+            <th class="data">Cho'Gath</th>
+          </tr>
+          <tr>
+            <th class="column">Ban 1</th>
+            <th class="column">Ban 2</th>
+            <th class="column">Ban 3</th>
+            <th class="column">Ban 4</th>
+            <th class="column">Ban 5</th>
+          </tr>
+          <tr>
+            <th class="data">Garen</th>
+            <th class="data">Master Yi</th>
+            <th class="data">Braum</th>
+            <th class="data">Darius</th>
+            <th class="data">Tristana</th>
+          </tr>
+        </table>
+        <h3 class="team">Other Information</h3>
+        <table>
+          <tr>
+            <th class="column">First Blood</th>
+            <th class="column">First Tower</th>
+            <th class="column">First Inhibitor</th>
+          </tr>
+          <tr>
+            <th class="data">Blue Team</th>
+            <th class="data">Blue Team</th>
+            <th class="data">Blue Team</th>
+          </tr>
+          <tr>
+            <th class="column">First Baron</th>
+            <th class="column">First Dragon</th>
+            <th class="column">First Rift Herald</th>
+          </tr>
+          <tr>
+            <th class="data">Blue Team</th>
+            <th class="data">Blue Team</th>
+            <th class="data">Red Team</th>
+          </tr>
+        </table>
+        <h3 class="duration">Game Duration: 39.82 minutes</h3>
+        <p id="res" class="res"></p>
+        <form id="form" action="/team_predict" method="post">
+          <input type="hidden" name="inputOption" value=5>
+          <label for="predict">Press the submit button to predict which team will win.</label>
+          <button class="button" type="submit" name="predict">Submit</button>
+        </form>
+        <% } %>
+      </div>
+    </div>
+    <div class="btn">
+      <form action="/" method="get">
+        <button class="submit" href="/" type="submit" name="button">Back</button>
+      </form>
+    </div>
+  </div>
+  <footer>
+    <p id="copyright"></p>
+  </footer>
+  <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+  <script type="text/javascript">
+    var today = new Date();
+    $("#copyright").text("© " + today.getFullYear() + " UCI MCS Class of 2020.");
+    $("#form").submit(function(event) {
+      event.preventDefault();
+      var $form = $(this);
+      var inputOption = $form.find("input[name='inputOption']").val();
+
+      $.ajax({
+        url: '/team_predict',
+        method: 'POST',
+        data: {
+          inputOption: inputOption
+        },
+        success: function(response) {
+          $("#res").css({
+            "background-color": "#1295D8",
+            "padding": "10px",
+            "margin-top": "25px",
+            "border-radius": "10px",
+            "border-style": "dotted",
+            "border-color": "white"
+          });
+          $("#res").text(response);
+        }
+      });
+    });
+  </script>
+</body>
+
+</html>

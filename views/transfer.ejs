@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <link rel="stylesheet" href="/css/styles.css">
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600' rel='stylesheet' type='text/css'>
+  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
+  <title>League of Legends Image Style Transfer</title>
+</head>
+
+<body>
+  <div class="container">
+    <div class="title">
+      <h1>League of Legends with Deep Learning</h1>
+    </div>
+    <div class="section">
+      <h2>League of Legends Image Style Transfer</h2>
+      <h3>Please select an option below:</h3>
+      <form class="option-form" action="/transfer" method="post">
+        <select name="id" required>
+          <option value="1" <%= (id == 1 ? "selected": "") %>>Try our demo</option>
+          <option value="2" <%= (id == 2 ? "selected": "") %>>Upload your own images</option>
+        </select>
+        <button id="switch" class="option-button" type="submit" name="button">Switch</button>
+      </form>
+      <div class="main-block">
+        <% if (id == 2) { %>
+        <form id="form" class="form" method="post" enctype="multipart/form-data" action="/create">
+          <div class="info">
+            <label class="upload" for="content">Please upload a content image:</label>
+            <input class="file" type="file" id="content" name="content" accept="image/*" required>
+            <div id="contentImage">
+            </div>
+            <label class="upload" for="style">Please upload a style image:</label>
+            <input class="file" type="file" id="style" name="style" accept="image/*" required>
+            <div id="styleImage">
+            </div>
+            <label class="upload" id="transferred">The style transferred image:</label>
+            <div id="result">
+            </div>
+          </div>
+          <label for="generate">Press submit to create the style transferred image.</label>
+          <button id="gen" class="submit" type="submit" name="generate">Submit</button>
+          <button id="clear" class="submit" type="button" name="button">Clear</button>
+        </form>
+        <% } else { %>
+          <form id="form2" class="form" method="get" action="/transfer_demo">
+            <div class="info">
+              <label class="upload2" for="content">Content image:</label>
+              <img class="img" src="/uploads/wukong.png" name="content" alt="content">
+              <label class="upload2" for="style">Style image:</label>
+              <img class="img" src="/uploads/sunrise.png" name="style" alt="style">
+              <label class="upload2" id="transferred">The style transferred image:</label>
+              <div id="result">
+              </div>
+            </div>
+            <label for="generate">Press submit to create the style transferred image.</label>
+            <button id="gen2" class="submit" type="submit" name="generate">Submit</button>
+            <button id="clear" class="submit" type="button" name="button">Clear</button>
+          </form>
+        <% } %>
+      </div>
+    </div>
+    <div class="btn">
+      <form action="/" method="get">
+        <button id="back" class="submit" href="/" type="submit" name="button">Back</button>
+      </form>
+    </div>
+    <input id="loader" class="loader" type="hidden"></input>
+  </div>
+  <footer>
+    <p id="copyright"></p>
+  </footer>
+  <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+  <script type="text/javascript">
+    var today = new Date();
+    $("#copyright").text("© " + today.getFullYear() + " UCI MCS Class of 2020.");
+
+    function filePreview(input, imageID, typeID) {
+      $("#" + typeID).remove();
+      if (input.files && input.files[0]) {
+        var reader = new FileReader();
+        reader.onload = function(e) {
+          $("#" + imageID).after('<img id="' + typeID + '" src="' + e.target.result +
+            '" width="60%" style="margin-left:auto; margin-right:auto; margin-bottom:10px; border-style:solid; border-radius:10px; border-width:5px; border-color:#FFB511; display:block;"/>');
+        };
+        reader.readAsDataURL(input.files[0]);
+      }
+    }
+
+    $("#content").change(function() {
+      filePreview(this, "contentImage", "contentID");
+    });
+
+    $("#style").change(function() {
+      filePreview(this, "styleImage", "styleID");
+    });
+
+    $("#gen").click(function() {
+      var content = $("#content").val();
+      var style = $("#style").val();
+      if (content.length !== 0 && style.length !== 0) {
+        $("#loader").prop("type", "");
+      }
+    });
+
+    $("#gen2").click(function() {
+      $("#loader").prop("type", "");
+    });
+
+    $("#form").submit(function(event) {
+      event.preventDefault();
+      $("#resultID").remove();
+      var formData = new FormData(document.getElementById("form"));
+
+      $.ajax({
+        url: '/create',
+        method: 'POST',
+        data: formData,
+        contentType: false,
+        processData: false,
+        cache: false,
+        success: function(response) {
+          $("#transferred").show();
+          var imgURL = "/results/transferred.png";
+          $("#result").after('<img id="resultID" src="' + imgURL +
+            '" width="60%" style="margin-left:auto; margin-right:auto; margin-bottom:10px; border-style:solid; border-radius:10px; border-width:5px; border-color:#FFB511; display:block;"/>')
+          $("#loader").prop("type", "hidden");
+        }
+      });
+    });
+
+    $("#form2").submit(function(event) {
+      event.preventDefault();
+      $("#resultID").remove();
+
+      $.ajax({
+        url: '/transfer_demo',
+        method: 'get',
+        success: function(response) {
+          $("#transferred").show();
+          var imgURL = "/results/transferred.png";
+          $("#result").after('<img id="resultID" src="' + imgURL +
+            '" width="60%" style="margin-left:auto; margin-right:auto; margin-bottom:10px; border-style:solid; border-radius:10px; border-width:5px; border-color:#FFB511; display:block;"/>')
+          $("#loader").prop("type", "hidden");
+        }
+      });
+    });
+
+    $("#clear").click(function() {
+      $("#contentID").remove();
+      $("#styleID").remove();
+      $("#resultID").remove();
+      $("#transferred").hide();
+      $("#content").val("");
+      $("#style").val("");
+    });
+  </script>
+</body>
+
+</html>

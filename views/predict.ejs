@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <link rel="stylesheet" href="/css/styles.css">
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600' rel='stylesheet' type='text/css'>
+  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
+  <title>Win Rate Prediction</title>
+</head>
+
+<body>
+  <div class="container">
+    <div class="title">
+      <h1>League of Legends with Deep Learning</h1>
+    </div>
+    <div class="section">
+      <h2>Win Rate Prediction for High Elo Ranked Games</h2>
+      <div class="main-block">
+        <form class="form" action="/predict" method="post">
+          <div class="info">
+            <select name="firstBlood" required>
+              <option disabled selected value="0">First Blood</option>
+              <option value="1">Yes</option>
+              <option value="0">No</option>
+            </select>
+            <select name="firstTower" required>
+              <option disabled selected value="0">First Tower</option>
+              <option value="1">Yes</option>
+              <option value="0">No</option>
+            </select>
+            <select name="firstBaron" required>
+              <option disabled selected value="0">First Baron</option>
+              <option value="1">Yes</option>
+              <option value="0">No</option>
+            </select>
+            <select name="firstDragon" required>
+              <option disabled selected value="0">First Dragon</option>
+              <option value="1">Yes</option>
+              <option value="0">No</option>
+            </select>
+            <input type="text" id="dragonKills" name="dragonKills" placeholder="Number of Dragon Kills" required autocomplete="off" onkeypress="javascript:return isNumber(event)">
+            <input type="text" id="baronKills" name="baronKills" placeholder="Number of Baron Kills" required autocomplete="off" onkeypress="javascript:return isNumber(event)">
+            <input type="text" id="wardPlaced" name="wardPlaced" placeholder="Number of Ward Placed" required autocomplete="off" onkeypress="javascript:return isNumber(event)">
+            <input type="text" id="wardKills" name="wardKills" placeholder="Number of Ward Kills" required autocomplete="off" onkeypress="javascript:return isNumber(event)">
+            <input type="text" id="kills" name="kills" placeholder="Number of Kills" required autocomplete="off" onkeypress="javascript:return isNumber(event)">
+            <input type="text" id="death" name="death" placeholder="Number of Deaths" required autocomplete="off" onkeypress="javascript:return isNumber(event)">
+            <input type="text" id="assist" name="assist" placeholder="Number of Assists" required autocomplete="off" onkeypress="javascript:return isNumber(event)">
+            <input type="text" id="championDamageDealt" name="championDamageDealt" placeholder="Quantity of Champion Damage Dealt" required autocomplete="off" onkeypress="javascript:return isNumber(event)">
+            <input type="text" id="totalGold" name="totalGold" placeholder="Quantity of Total Gold" required autocomplete="off" onkeypress="javascript:return isNumber(event)">
+            <input type="text" id="totalMinionKills" name="totalMinionKills" placeholder="Number of Total Minion Kills" required autocomplete="off" onkeypress="javascript:return isNumber(event)">
+            <input type="text" id="totalLevel" name="totalLevel" placeholder="Total Level of Your Team (5 Members)" required autocomplete="off" onkeypress="javascript:return isNumber(event)">
+            <input type="text" id="jungleMinionKills" name="jungleMinionKills" placeholder="Number of Jungle Minion Kills" required autocomplete="off" onkeypress="javascript:return isNumber(event)">
+            <input type="text" id="killingSpree" name="killingSpree" placeholder="Number of Killing Sprees" required autocomplete="off" onkeypress="javascript:return isNumber(event)">
+            <input type="text" id="totalHeal" name="totalHeal" placeholder="Number of Total Heals" required autocomplete="off" onkeypress="javascript:return isNumber(event)">
+          </div>
+          <label for="predict">Press the submit button to predict your win rate.</label>
+          <button class="submit" type="submit" name="predict">Submit</button>
+        </form>
+      </div>
+    </div>
+    <div class="btn">
+      <form action="/" method="get">
+        <button class="submit" href="/" type="submit" name="button">Back</button>
+      </form>
+    </div>
+  </div>
+  <footer>
+    <p id="copyright"></p>
+  </footer>
+  <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+  <script type="text/javascript">
+    var today = new Date();
+    $("#copyright").text("© " + today.getFullYear() + " UCI MCS Class of 2020.");
+
+    function isNumber(evt) {
+      var iKeyCode = (evt.which) ? evt.which : evt.keyCode
+      if (iKeyCode != 46 && iKeyCode > 31 && (iKeyCode < 48 || iKeyCode > 57))
+        return false;
+      return true;
+    }
+  </script>
+</body>
+
+</html>

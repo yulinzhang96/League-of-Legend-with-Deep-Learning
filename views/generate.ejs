@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <link rel="stylesheet" href="/css/styles.css">
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600' rel='stylesheet' type='text/css'>
+  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
+  <title>League of Legends Wiki Text Generator</title>
+</head>
+
+<body>
+  <div class="container">
+    <div class="title">
+      <h1>League of Legends with Deep Learning</h1>
+    </div>
+    <div class="section">
+      <h2>League of Legends Wiki Text Generator</h2>
+      <div class="main-block">
+        <form id="form" class="form" action="/generate">
+          <div class="info">
+            <h4 class="hint">Please input your first several words related with LOL (Input reference: <a class="link" href="https://en.wikipedia.org/wiki/League_of_Legends" target="_blank">Wikipedia</a>):</h4>
+            <input id="inputText" type="text" name="inputText" placeholder="Input your words..." required autocomplete="off">
+            <h4 class="select">Please select how many words you want to generate:</h4>
+            <select id="select" class="length" name="length" required>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+              <option value="6">6</option>
+              <option value="7">7</option>
+              <option value="8">8</option>
+              <option value="9">9</option>
+              <option value="10">10</option>
+              <option value="11">11</option>
+              <option value="12">12</option>
+              <option value="13">13</option>
+              <option value="14">14</option>
+              <option value="15">15</option>
+              <option value="16">16</option>
+              <option value="17">17</option>
+              <option value="18">18</option>
+              <option value="19">19</option>
+              <option value="20">20</option>
+              <option value="21">21</option>
+              <option value="22">22</option>
+              <option value="23">23</option>
+              <option value="24">24</option>
+              <option value="25">25</option>
+              <option value="26">26</option>
+              <option value="27">27</option>
+              <option value="28">28</option>
+              <option value="29">29</option>
+              <option value="30">30</option>
+            </select>
+            <h4 class="select">Please select a model to generate the text:</h4>
+            <select id="select2" class="model" name="model" required>
+              <option value="LSTM">Long Short Term Memory Based Model</option>
+              <option value="GRU">Gated Recurrent Unit Based Model</option>
+            </select>
+            <label for="output">Output of LSTM Based Model:</label>
+            <textarea class="output" id="output" name="output" rows="3"></textarea>
+            <label for="output2">Output of GRU Based Model:</label>
+            <textarea class="output" id="output2" name="output2" rows="3"></textarea>
+          </div>
+          <label for="generate">Press submit to generate the rest of the text.</label>
+          <button id="gen" class="submit" type="submit" name="generate">Submit</button>
+          <button id="clear" class="submit" type="button" name="button">Clear</button>
+        </form>
+      </div>
+    </div>
+    <div class="btn">
+      <form action="/" method="get">
+        <button id="back" class="submit" href="/" type="submit" name="button">Back</button>
+      </form>
+    </div>
+    <input id="loader" class="loader" type="hidden"></input>
+  </div>
+  <footer>
+    <p id="copyright"></p>
+  </footer>
+  <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+  <script type="text/javascript">
+    var today = new Date();
+    $("#copyright").text("© " + today.getFullYear() + " UCI MCS Class of 2020.");
+    $("#inputText").keyup(function() {
+      var text = $("#inputText").val();
+      $("#output").text(text);
+      $("#output2").text(text);
+    });
+
+    document.getElementById("output").readOnly = "true";
+    document.getElementById("output2").readOnly = "true";
+
+    $("#gen").click(function() {
+      var value = $("#inputText").val();
+      if(value.length !== 0) {
+        $("#loader").prop("type", "");
+      }
+    });
+
+    $("#form").submit(function(event) {
+      event.preventDefault();
+      var $form = $(this);
+      var inputText = $form.find("input[name='inputText']").val();
+      var length = $form.find("select[name='length']").val();
+      var model = $form.find("select[name='model']").val();
+
+      $.ajax({
+        url: '/generate',
+        method: 'POST',
+        data: {inputText: inputText, length: length, model: model},
+        success: function(response) {
+          //console.log(response);
+          if(model === "LSTM") {
+            $("#output").text(response);
+          } else {
+            $("#output2").text(response);
+          }
+          $("#loader").prop("type", "hidden");
+        }
+      });
+    });
+
+    $("#clear").click(function() {
+      $("#inputText").val("");
+      $("#select").prop("selectedIndex", 0);
+      $("#output").empty();
+      $("#output2").empty();
+    });
+
+  </script>
+</body>
+
+</html>

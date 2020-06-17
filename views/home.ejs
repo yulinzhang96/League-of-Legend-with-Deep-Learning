@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <link rel="stylesheet" href="/css/styles.css">
+  <title>League of Legends with Deep Learning</title>
+</head>
+
+<body>
+  <div class="container">
+    <div class="title">
+      <h1>League of Legends with Deep Learning</h1>
+    </div>
+    <div class="block">
+      <div class="subtitle">
+        <h3>Win Rate Prediction for High Elo Ranked Games</h3>
+      </div>
+      <div class="des">
+        <p class="content">
+          Just tell us your plan for your next high elo ranked games (Challenger, GrandMaster, Master),
+          such as whether you want to have first blood,
+          total gold you want to gain, number of kills, and etc.
+          We will predict your probability of winning the
+          game with 95% accuracy based on historical data. <br><br>
+          Please note that it's a common sense that you need to
+          destory your opponent's base to win a game, so some
+          winning elements such as number of tower kills, number
+          of inhibitor kills, and quantity of object damage dealt
+          are not included in our prediction model. They are vital
+          to the victory of a game, so it's unnecessary to analyze them. <br><br>
+          Data source: <a class="data-source" href="https://www.kaggle.com/gyejr95/league-of-legends-challenger-ranked-games2020" target="_blank">Kaggle</a>.
+        </p>
+      </div>
+      <div class="">
+        <form action="/predict" method="get">
+          <button class="button">Go</button>
+        </form>
+      </div>
+    </div>
+    <div class="block">
+      <div class="subtitle">
+        <h3>League of Legends Wiki Text Generator</h3>
+      </div>
+      <div class="des">
+        <p class="content">
+          Just input several words related with League of Legends.
+          The wiki text generator will automatically complete the sentence
+          with words from League of Legends Wiki page using
+          Natural Language Processing models and algorithms. <br><br>
+          Data source: <a class="data-source" href="https://en.wikipedia.org/wiki/League_of_Legends" target="_blank">Wikipedia</a>.
+        </p>
+      </div>
+      <div class="">
+        <form action="/generate" method="get">
+          <button class="button">Go</button>
+        </form>
+      </div>
+    </div>
+    <div class="block">
+      <div class="subtitle">
+        <h3>Game Victory Prediction Demo</h3>
+      </div>
+      <div class="des">
+        <p class="content">
+          We present you with the demo of game victory prediction that predicts
+          which team will win between the blue and the red team.
+          The input information includes the five chosen heros and the five banned heros of each team,
+          along with several other necessary features, such as firstBlood, firstTower, and etc.<br><br>
+          Data source: <a class="data-source" href="https://www.kaggle.com/datasnaek/league-of-legends" target="_blank">Kaggle</a>.
+        </p>
+      </div>
+      <div class="">
+        <form action="/demo" method="post">
+          <input type="hidden" name="id" value="1">
+          <button class="button">Go</button>
+        </form>
+      </div>
+    </div>
+    <div class="block">
+      <div class="subtitle">
+        <h3>League of Legends Image Style Transfer</h3>
+      </div>
+      <div class="des">
+        <p class="content">
+          Just upload two images. One is the content image,
+          and another is the style image. Our deep learning
+          model will turn the style of the content image into
+          that of the style image. <br><br>
+          Image source: <a class="data-source" href="https://wall.alphacoders.com/by_sub_category.php?id=169908&name=League+Of+Legends+Wallpapers" target="_blank">Alpha Coders</a> &
+          <a class="data-source" href="https://pixabay.com/images/search/art/" target="_blank">Pixabay</a> &
+          <a class="data-source" href="https://en.wikipedia.org/wiki/Claude_Monet" target="_blank">Wikipedia</a>.
+        </p>
+      </div>
+      <div class="">
+        <form action="/transfer" method="get">
+          <button class="button">Go</button>
+        </form>
+      </div>
+    </div>
+  </div>
+  <footer>
+    <p id="copyright"></p>
+  </footer>
+
+  <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+  <script type="text/javascript">
+    var today = new Date();
+    $("#copyright").text("© " + today.getFullYear() + " UCI MCS Class of 2020.");
+  </script>
+</body>
+
+</html>
