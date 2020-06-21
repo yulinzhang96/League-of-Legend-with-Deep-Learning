@@ -7,7 +7,7 @@ Project description:
 and a Bidirectional LSTM to automatically generate LOL Wiki text by using Python and Tensorflow
 
 • Deployed the models using Tensorflow.js and python-shell on a website that’s 
-implemented with Node.js, HTML , CSS , jQuery and AJAX , and that’s published on Azure
+implemented with Node.js, HTML , CSS , jQuery and AJAX , and that’s published on Azure/Heroku
 
 Deployment configuration (Azure):
 
